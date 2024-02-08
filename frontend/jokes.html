@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #mainContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+        body {
+            background-color: black;
+            color: white;
+        }
+    </style>
+    <title>jokes</title>
+</head>
+<body>
+    <div id="mainContainer">
+        <h1>Here are the jokes:-</h1>        
+    </div>
+
+</body>
+
+<script>
+    const requestURL = "http://localhost:2345/jokes";
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestURL);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            const data = JSON.parse(this.responseText);
+            console.log(`response data is an array of ${data.length} items!`);
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                const para = document.createElement('p');
+                para.innerHTML = `setup: ${data[i].setup} <br> punchline: ${data[i].punchline}`;
+                document.getElementById("mainContainer").appendChild(para);
+            }
+        }
+    }
+    xhr.send();
+</script>
+</html>
